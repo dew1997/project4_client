@@ -1,6 +1,6 @@
 import moment from "moment";
 
-const Post = ({ post }) => {
+const Post = ({ post }: { post: any }) => {
   return (
     <>
       <div>
@@ -11,7 +11,7 @@ const Post = ({ post }) => {
         <button onClick={() => {}}>Edit</button>
       </div>
       <div>
-        <p>{post.tags.map((tag) => tag)}</p>
+        <p>{post.tags.map((tag: any) => tag)}</p>
       </div>
       <div>
         <p> {post.message}</p>

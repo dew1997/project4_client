@@ -2,7 +2,7 @@ import * as api from "../api";
 
 //Action creators
 
-export const getPosts = () => async (dispatch) => {
+export const getPosts = () => async (dispatch: any) => {
   try {
     const { data } = await api.fetchPosts();
     dispatch({ type: "FETCH_ALL", payload: data });
@@ -11,7 +11,7 @@ export const getPosts = () => async (dispatch) => {
   }
 };
 
-export const createPost = (post) => async (dispatch) => {
+export const createPost = (post: any) => async (dispatch: any) => {
   try {
     const { data } = await api.createPost(post);
     dispatch({ type: "CREATE", payload: data });
