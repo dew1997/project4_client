@@ -12,6 +12,8 @@ const store = configureStore({
   middleware: [thunk],
 });
 
+export type AppDispatch = typeof store.dispatch;
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
