@@ -7,9 +7,8 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("profile") || "")
-  );
+  // @ts-ignore
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });
@@ -27,8 +26,8 @@ const Navbar = () => {
         logout();
       }
     }
-
-    setUser(JSON.parse(localStorage.getItem("profile") || ""));
+    // @ts-ignore
+    setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
 
   return (

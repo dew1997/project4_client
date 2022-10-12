@@ -100,7 +100,7 @@ const PostDetails = () => {
                       )}
                     </p>
                     <div className="relative flex flex-col items-start px-6 bg-white border border-t-0 border-gray-200 py-7 rounded-b-2xl">
-                      <div className="bg-indigo-400 absolute top-0 -mt-3 flex items-center px-3 py-1.5 leading-none w-auto inline-block rounded-full text-xs font-medium uppercase text-white inline-block">
+                      <div className="bg-indigo-400 absolute top-0 -mt-3  items-center px-3 py-1.5 leading-none w-auto inline-block rounded-full text-xs font-medium uppercase text-white ">
                         <span>{post.tags}</span>
                       </div>
                       <h2 className="text-base text-gray-500 font-bold sm:text-lg md:text-xl">
