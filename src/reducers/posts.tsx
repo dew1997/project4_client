@@ -67,6 +67,7 @@ export default (state = { isLoading: true, posts: [] }, action: Action) => {
     case DELETE:
       return {
         ...state,
+        // @ts-ignore
         posts: state.posts.filter((post) => post._id !== action.payload),
       };
 

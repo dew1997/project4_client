@@ -6,8 +6,6 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 const Paginate = ({ page }: { page: number }) => {
   const data = useAppSelector((state) => state.posts);
 
-  console.log(data);
-
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (page) dispatch(getPosts(page));
