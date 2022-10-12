@@ -1,19 +1,26 @@
 import Post from "./Post/Post";
-import { useSelector } from "react-redux";
-const Posts = () => {
-  const posts = useSelector((state: any) => state.posts);
+import { useAppSelector } from "../../hooks";
 
-  return !posts.length ? (
-    <p> Loading..</p>
-  ) : (
-    <div>
-      {posts.map((post: any) => (
-        <div key={post.id}>
-          <Post post={post} />
-        </div>
-      ))}
-    </div>
-  );
+const Posts = ({ setCurrentId }: { setCurrentId: any }) => {
+  const { posts, isLoading } = useAppSelector((state) => state.posts);
+
+  if (!posts.length && !isLoading) return <p>No posts</p>;
+
+  if (isLoading) {
+    return (
+      <div>
+        <p> Loading..</p>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        {posts.map((post: any) => (
+          <Post key={post._id} post={post} setCurrentId={setCurrentId} />
+        ))}
+      </div>
+    );
+  }
 };
 
 export default Posts;

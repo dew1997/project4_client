@@ -1,25 +1,23 @@
-import Form from "./components/Form/Form";
-import Posts from "./components/Posts/Posts";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { getPosts } from "./actions/posts";
+import Navbar from "./components/Navbar/Navbar";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Home from "./components/Home/Home";
+import Auth from "./components/Auth/Auth";
+import PostDetails from "./components/Posts/PostDetails/PostDetails";
+import "./index.css";
 function App() {
-  const dispatch: any = useDispatch();
-
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch]);
+  const user = JSON.parse(localStorage.getItem("profile") || "{}");
 
   return (
-    <div>
-      <div>
-        <Posts />
-      </div>
-      <div>
-        <Form />
-      </div>
-      hello
-    </div>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/posts" element={<Home />} />
+        <Route path="/posts/search" element={<Home />} />
+        <Route path="/posts/:id" element={<PostDetails />} />
+        <Route path="*" element={<Navigate to="/posts" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

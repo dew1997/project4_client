@@ -1,40 +1,77 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FileBase from "react-file-base64";
-import { useDispatch } from "react-redux";
-import { createPost } from "../../actions/posts";
-import { AppDispatch } from "../../main";
-const Form = () => {
+import { createPost, updatePost } from "../../actions/posts";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { useNavigate } from "react-router-dom";
+
+const Form = ({
+  currentId,
+  setCurrentId,
+}: {
+  currentId: number;
+  setCurrentId: any;
+}) => {
   const [postData, setPostData] = useState({
-    creator: "",
     title: "",
     message: "",
-    tags: "",
+    tags: [""],
     selectedFile: "",
   });
-  const dispatch = useDispatch();
-  const useAppDispatch: () => AppDispatch = useDispatch;
+
+  const user = JSON.parse(localStorage.getItem("profile") || "{}");
+
+  const post = useAppSelector((state) =>
+    currentId
+      ? state.posts.posts.find((message: any) => message._id === currentId)
+      : null
+  );
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (post) setPostData(post);
+  }, [post]);
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    // dispatch(createPost(postData));
 
-    console.log("submit");
+    if (currentId === 0) {
+      dispatch(createPost({ ...postData, name: user?.result?.name }, navigate));
+
+      clear();
+    } else {
+      dispatch(
+        updatePost(currentId, { ...postData, name: user?.result?.name })
+      );
+      clear();
+      navigate(`/`);
+    }
   };
 
   const clear = () => {
-    console.log("clear");
+    setCurrentId(0);
+    setPostData({
+      title: "",
+      message: "",
+      tags: [""],
+      selectedFile: "",
+    });
   };
+
+  if (!user?.result?.name) {
+    return (
+      <div>
+        <p>Please Sign In to create your own post and like others post</p>
+      </div>
+    );
+  }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Creator"
-          name="creator"
-          value={postData.creator}
-          onChange={(e) =>
-            setPostData({ ...postData, creator: e.target.value })
-          }
-        ></input>
+        <p> {currentId ? "Edit" : "Create"} post </p>
+
         <input
           placeholder="Title"
           name="title"
@@ -53,7 +90,9 @@ const Form = () => {
           placeholder="Tags"
           name="tags"
           value={postData.tags}
-          onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+          onChange={(e) =>
+            setPostData({ ...postData, tags: e.target.value.split(",") })
+          }
         ></input>
         <div>
           <FileBase
