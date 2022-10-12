@@ -3,17 +3,24 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getPosts } from "../actions/posts";
 import { useAppDispatch, useAppSelector } from "../hooks";
-const Paginate = ({ page }) => {
+const Paginate = ({ page }: { page: number }) => {
   const data = useAppSelector((state) => state.posts);
+
   console.log(data);
+
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (page) dispatch(getPosts(page));
   }, [page]);
+  type Person2 = {
+    [key: string]: any; // 👈️ variable keys
+    name: string;
+  };
 
   return (
     <Pagination
-      count={2}
+      // @ts-ignore
+      count={data.numberOfPages}
       page={Number(page) || 1}
       variant="outlined"
       color="primary"

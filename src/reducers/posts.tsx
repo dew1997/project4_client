@@ -42,7 +42,7 @@ export default (state = { isLoading: true, posts: [] }, action: Action) => {
         ...state,
         posts: action.payload.data,
         currentPage: action.payload.currentPage,
-        numberOfPages: action.payload.numberofPages,
+        numberOfPages: action.payload.numberOfPages,
       };
     case COMMENT:
       return {

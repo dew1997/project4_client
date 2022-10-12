@@ -7,6 +7,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleSubmit = (values: any) => {
+    // @ts-ignore
     dispatch(signup(values, navigate));
   };
   const SignupSchema = Yup.object().shape({

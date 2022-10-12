@@ -16,12 +16,17 @@ const Home = () => {
   const dispatch = useAppDispatch();
   const query = useQuery();
   const navigate = useNavigate();
-  const page: string | number = query.get("page") || 1;
+  let page: number | number = Number(query.get("page")) || 1;
   const searchQuery = query.get("searchQuery");
   const [search, setSearch] = useState("");
   const [tags, setTags] = useState<string[]>([]);
 
+  if (page === null) {
+    page = 1;
+  }
+
   useEffect(() => {
+    // @ts-ignore
     dispatch(getPosts());
   }, [currentId, dispatch]);
 

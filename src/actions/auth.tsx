@@ -5,7 +5,6 @@ export const signin =
   (values: { email: string; password: string }, navigate: any) =>
   async (dispatch: any) => {
     try {
-      console.log(values);
       const { data } = await api.signIn(values);
 
       dispatch({ type: AUTH, data });

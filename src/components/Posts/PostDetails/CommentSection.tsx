@@ -2,20 +2,18 @@ import { useRef, useState } from "react";
 import { TextField } from "@mui/material";
 import { commentPost } from "../../../actions/posts";
 import { useAppDispatch } from "../../../hooks";
-const CommentSection = ({ post }) => {
+const CommentSection = ({ post }: { post: any }) => {
   const dispatch = useAppDispatch();
   const [comments, setComments] = useState(post?.comments);
   const [comment, setComment] = useState("");
-  const user = JSON.parse(localStorage.getItem("profile"));
-  const commentsRef = useRef();
+  const user = JSON.parse(localStorage.getItem("profile") || "");
+
   const handleClick = async () => {
     const finalComment = `${user.result.name}:${comment}`;
     const newComments = await dispatch(commentPost(finalComment, post._id));
 
     setComments(newComments);
     setComment("");
-
-    commentsRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -29,7 +27,7 @@ const CommentSection = ({ post }) => {
               </h3>
               <textarea
                 name="comment"
-                className="w-full px-4 py-3 mb-4 border border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
+                className="w-full px-4 py-3 mb-4  border-2 border-transparent border-gray-200 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
                 placeholder="Write your comment"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
@@ -47,12 +45,12 @@ const CommentSection = ({ post }) => {
       )}
 
       <div>
-        <div className="max-w-4xl px-10 py-16 mx-auto bg-gray-100  bg-white min-w-screen animation-fade animation-delay  px-0 px-8 mx-auto sm:px-12 xl:px-5">
-          <p className="mt-1 text-2xl font-bold text-left text-gray-800 sm:mx-6 sm:text-2xl md:text-3xl lg:text-4xl sm:text-center sm:mx-0">
+        <div className="max-w-4xl px-10 py-16 mx-auto bg-gray-100  min-w-screen animation-fade animation-delay   sm:px-12 xl:px-5">
+          <p className="mt-1 text-2xl font-bold text-left text-gray-800 sm:mx-6 sm:text-2xl md:text-3xl lg:text-4xl sm:text-center ">
             All comments on this post
           </p>
           <div className="flex  items-center w-full px-6 py-6 mx-auto mt-10 bg-white border border-gray-200 rounded-lg sm:px-8 md:px-12 sm:py-8 sm:shadow lg:w-5/6 xl:w-2/3">
-            {comments.map((c, index) => (
+            {comments.map((c: any, index: number) => (
               <div key={index}>
                 <p>
                   {c.split(":")[0]} {c.split(":")[1]}
@@ -60,8 +58,6 @@ const CommentSection = ({ post }) => {
               </div>
             ))}
           </div>
-
-          <div ref={commentsRef} />
         </div>
       </div>
     </>

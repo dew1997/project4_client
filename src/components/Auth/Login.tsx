@@ -16,6 +16,7 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values: { email: string; password: string }) => {
+    // @ts-ignore
     dispatch(signin(values, navigate));
   };
   const loginSchema = Yup.object().shape({
